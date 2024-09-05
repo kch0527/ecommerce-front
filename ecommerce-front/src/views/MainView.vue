@@ -1,45 +1,63 @@
 <template>
-    <div class="product-list">
-      <h2>Featured Products</h2>
-      <div class="products">
-        <div v-for="product in products" :key="product.id" class="product-card">
-          <img :src="product.image" :alt="product.name" />
-          <h3>{{ product.name }}</h3>
-          <p>{{ product.price }}</p>
-        </div>
+  <div class="catalog-list">
+    <h2>Featured Products</h2>
+    <div class="catalogs">
+      <div v-for="catalog in catalogs" :key="catalog.id" class="catalog-card">
+        <img :src="catalog.image" :alt="catalog.productName" />
+        <h3 @click="href(catalog)">{{ catalog.productName }}</h3>
+        <p>{{ catalog.unitPrice }}</p>
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
-  <script>
+<script>
+import axios from 'axios';
+
   export default {
     name: 'MainView',
     data() {
       return {
-        products: [
-          { id: 1, name: 'Product 1', price: '$50', image: 'https://via.placeholder.com/150' },
-          { id: 2, name: 'Product 2', price: '$60', image: 'https://via.placeholder.com/150' },
-          { id: 3, name: 'Product 3', price: '$70', image: 'https://via.placeholder.com/150' },
-        ]
+        catalogs: []
+      }
+    }, 
+    created() {
+      this.getData()
+    }, 
+    methods: {
+      getData() {
+        axios
+        .get('http://localhost:8000/catalog-service/catalogs')
+        .then((response) => {
+          console.log(response.data);
+          this.catalogs = response.data
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      },
+      href(catalog) {
+        console.log(catalog)
+        this.$router.push({name: 'CatalogView'})
       }
     }
   }
-  </script>
+</script>
   
   <style scoped>
-  .product-list {
+  .catalog-list {
     padding: 2rem;
   }
-  .products {
+  .catalogs {
     display: flex;
     gap: 1rem;
   }
-  .product-card {
+  .catalog-card {
     border: 1px solid #ddd;
     padding: 1rem;
     text-align: center;
   }
-  .product-card img {
+  .catalog-card img {
     max-width: 100%;
     height: auto;
   }

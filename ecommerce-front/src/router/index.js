@@ -11,6 +11,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "main" */ '../views/MainView.vue')
   },
   {
+    path: '/catalog',
+    name: 'CatalogView',
+    component: () => import(/* webpackChunkName: "catalog" */ '../views/catalog/CatalogView.vue')
+  },
+  {
     path: '/join',
     name: 'JoinView',
     component: () => import(/* webpackChunkName: "join" */ '../views/user/JoinView.vue')
