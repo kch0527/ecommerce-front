@@ -37,7 +37,7 @@ import axios from 'axios';
         })
       },
       href(catalog) {
-        console.log(catalog)
+        this.$store.commit('setProduct', catalog)
         this.$router.push({name: 'CatalogView'})
       }
     }
