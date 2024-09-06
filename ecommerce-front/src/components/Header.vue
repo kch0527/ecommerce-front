@@ -4,8 +4,8 @@
       <nav>
         <ul>
           <li><a href="/main">Home</a></li>
-          <li><a href="/login">sign in</a></li>
-          <li><a href="/join">sign up</a></li>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/join">Sign up</a></li>
         </ul>
       </nav>
     </header>
