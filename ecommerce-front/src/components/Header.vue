@@ -14,32 +14,20 @@
   </template>
   
   <script>
+  import { mapGetters, mapActions } from 'vuex'
+  
   export default {
     name: 'Header',
-    data() {
-      return {
-      isLoggedIn: false
-    }
-  },
-  created() {
-    this.checkLoginStatus()
-    window.addEventListener('login-status-changed', this.checkLoginStatus)
+    computed: {
+    ...mapGetters(['isLoggedIn']),  // Vuex의 로그인 상태 가져오기
   },
   methods: {
-    checkLoginStatus() {
-      const token = localStorage.getItem('token')
-      this.isLoggedIn = !!token
-    },
     logout() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('userId');
-      this.isLoggedIn = false;
-      this.$router.push('/main');
-      window.dispatchEvent(new Event('login-status-changed'));
-    }
+      this.$store.dispatch('logout')
     }
   }
-  </script>
+};
+</script>
   
   <style scoped>
   .header {

@@ -27,7 +27,7 @@ import axios from 'axios';
     methods: {
       getData() {
         axios
-        .get('http://localhost:60321/catalog-service/catalogs')
+        .get('http://localhost:52281/catalog-service/catalogs')
         .then((response) => {
           console.log(response.data);
           this.catalogs = response.data

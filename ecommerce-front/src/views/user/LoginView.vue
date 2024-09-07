@@ -18,34 +18,17 @@
   </template>
   
   <script>
-  import axios from 'axios';
+
   export default {
     name: "LoginView",
     data() {
       return {
-        user: { email: '', password: '' },
-      }
+        user: { email: '', password: '' }
+      };
     },
     methods: {
-      async login() {
-        try{
-          const response = await axios.post('http://localhost:62430/login', this.user, {withCredentials: true})
-          
-          const token = response.headers.get('token')
-          const userId = response.headers.get('userId')
-
-          if (token) {
-          localStorage.setItem('token', token);
-          localStorage.setItem('userId', userId);
-          window.dispatchEvent(new Event('login-status-changed'));
-          this.$router.push({ name: 'MainView' });
-          } else {
-          console.error("No token found in the response");
-          }
-        } catch (error) {
-          console.error("Login failed:", error);
-          alert('email or password not found')
-        }
+      login() {
+          this.$store.dispatch('login', this.user);
       }
     }
   };
