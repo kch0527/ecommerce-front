@@ -23,18 +23,29 @@
     name: "LoginView",
     data() {
       return {
-        user: { email: '', name: '', pwd: '' },
+        user: { email: '', password: '' },
       }
     },
     methods: {
-      login() {
-        console.log(this.user)
-        axios
-        .post('http://localhost:8000/user-service/login', this.user, {withCredentials: true})
-        .then((res) => {
-            this.$router.push({name: 'MainView'})
-        })
-        .catch((err) => console.log(err))
+      async login() {
+        try{
+          const response = await axios.post('http://localhost:62430/login', this.user, {withCredentials: true})
+          
+          const token = response.headers.get('token')
+          const userId = response.headers.get('userId')
+
+          if (token) {
+          localStorage.setItem('token', token);
+          localStorage.setItem('userId', userId);
+          window.dispatchEvent(new Event('login-status-changed'));
+          this.$router.push({ name: 'MainView' });
+          } else {
+          console.error("No token found in the response");
+          }
+        } catch (error) {
+          console.error("Login failed:", error);
+          alert('email or password not found')
+        }
       }
     }
   };

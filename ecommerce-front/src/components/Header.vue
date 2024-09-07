@@ -4,8 +4,10 @@
       <nav>
         <ul>
           <li><a href="/main">Home</a></li>
-          <li><a href="/login">Login</a></li>
-          <li><a href="/join">Sign up</a></li>
+          <li v-if="!isLoggedIn"><a href="/login">Login</a></li>
+          <li v-if="!isLoggedIn"><a href="/join">Sign up</a></li>
+          <li v-if="isLoggedIn"><a href="/mypage">My Page</a></li>
+          <li v-if="isLoggedIn"><a href="#" @click.prevent="logout">Logout</a></li>
         </ul>
       </nav>
     </header>
@@ -13,7 +15,29 @@
   
   <script>
   export default {
-    name: 'Header'
+    name: 'Header',
+    data() {
+      return {
+      isLoggedIn: false
+    }
+  },
+  created() {
+    this.checkLoginStatus()
+    window.addEventListener('login-status-changed', this.checkLoginStatus)
+  },
+  methods: {
+    checkLoginStatus() {
+      const token = localStorage.getItem('token')
+      this.isLoggedIn = !!token
+    },
+    logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      this.isLoggedIn = false;
+      this.$router.push('/main');
+      window.dispatchEvent(new Event('login-status-changed'));
+    }
+    }
   }
   </script>
   
