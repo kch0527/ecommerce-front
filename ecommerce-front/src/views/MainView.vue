@@ -4,7 +4,7 @@
     <div class="catalogs">
       <div v-for="catalog in catalogs" :key="catalog.id" class="catalog-card">
         <img :src="catalog.image" :alt="catalog.productName" />
-        <h3 @click="href(catalog)">{{ catalog.productName }}</h3>
+        <h3 @click="goDetail(catalog.id)">{{ catalog.productName }}</h3>
         <p>{{ catalog.unitPrice }}</p>
       </div>
     </div>
@@ -27,7 +27,7 @@ import axios from 'axios';
     methods: {
       getData() {
         axios
-        .get('http://localhost:52281/catalog-service/catalogs')
+        .get('http://localhost:8000/catalog-service/catalogs')
         .then((response) => {
           console.log(response.data);
           this.catalogs = response.data
@@ -36,9 +36,8 @@ import axios from 'axios';
           console.log(error)
         })
       },
-      href(catalog) {
-        this.$store.commit('setProduct', catalog)
-        this.$router.push({name: 'CatalogView'})
+      goDetail(id) {
+        this.$router.push(`/catalog/${id}`);
       }
     }
   }

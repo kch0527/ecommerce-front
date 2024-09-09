@@ -12,9 +12,10 @@ const routes = [
     component: () => import(/* webpackChunkName: "main" */ '../views/MainView.vue')
   },
   {
-    path: '/catalog',
+    path: '/catalog/:id',
     name: 'CatalogView',
-    component: () => import(/* webpackChunkName: "catalog" */ '../views/catalog/CatalogView.vue')
+    component: () => import(/* webpackChunkName: "catalog" */ '../views/catalog/CatalogView.vue'),
+    props: true
   },
   {
     path: '/join',
@@ -30,6 +31,18 @@ const routes = [
     path: '/myPage',
     name: 'MyView',
     component: () => import(/* webpackChunkName: "myPage" */ '../views/user/MyView.vue')
+  },
+  {
+    path: '/edit/:userId',
+    name: 'EditView',
+    component: () => import(/* webpackChunkName: "edit" */ '../views/user/EditView.vue'),
+    props: true
+  },
+  {
+    path: '/check',
+    name: 'CheckView',
+    component: () => import(/* webpackChunkName: "check" */ '../views/user/CheckView.vue'),
+    props: true
   }
 ]
 
