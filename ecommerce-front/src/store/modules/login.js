@@ -20,13 +20,13 @@ export default {
   actions: {
     login (dispatch, loginObj) {
       axios
-        .post('http://localhost:52286/login', loginObj, {withCredentials: true})
+        .post('http://localhost:8000/user-service/login', loginObj, {withCredentials: true})
         .then((response) => {
           const token = response.headers['token']
           localStorage.setItem('token', token)
-          const userId = response.headers['userId']
+          const userId = response.headers.get('userId')
           localStorage.setItem('userId', userId)
-          axios.defaults.headers.common.Authorization = `${token}`
+          //axios.defaults.headers.common.Authorization = `Bearer ${token}`
           this.dispatch('success_commit')
         }).catch((err) => {
             alert('이메일과 비밀번호를 확인하세요.')

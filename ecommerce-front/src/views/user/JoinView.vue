@@ -33,7 +33,7 @@
       signup() {
         console.log(this.user)
         axios
-        .post('http://localhost:52286/users', this.user, {withCredentials: true})
+        .post('http://localhost:8000/user-service/users', this.user, {withCredentials: true})
         .then((res) => {
             alert("회원가입이 완료되었습니다.")
             this.$router.push({name: 'LoginView'})
